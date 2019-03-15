@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Charp_2_Db"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" MinWidth="600">
     <Grid>
-        
+        <StackPanel>
+            <Menu Height="25" VerticalAlignment="Top">
+                <MenuItem Header="Файл">
+                    <MenuItem Header="Сохранить" Click="miSave_OnClick" />
+                    <MenuItem Header="Обновить" Click="miRefresh_OnClick"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <DataGrid x:Name="DataGrid" AutoGenerateColumns="True" />
+        </StackPanel>
     </Grid>
 </Window>
