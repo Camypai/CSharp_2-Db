@@ -9,6 +9,6 @@ namespace Charp_2_Db.Models
         public string Position { get; set; }
         public int Age { get; set; }
         public int Experience { get; set; }
-        public Department Department { get; set; }
+        public int? DepartmentId { get; set; }
     }
 }
