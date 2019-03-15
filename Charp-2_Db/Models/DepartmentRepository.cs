@@ -25,7 +25,14 @@ namespace Charp_2_Db.Models
             }
             else
             {
-                _departments = new List<Department>();
+                _departments = new List<Department>
+                {
+                    new Department
+                    {
+                        Id = 1,
+                        Name = "Школа"
+                    }
+                };
             }
         }
         
@@ -39,9 +46,9 @@ namespace Charp_2_Db.Models
             return _departments.Find(q => q.Id == id);
         }
 
-        public IEnumerable<Department> RetrieveMultiple(Func<Department, bool> predicate)
+        public IEnumerable<Department> RetrieveMultiple(Func<Department, bool> predicate = null)
         {
-            return _departments.Where(predicate);
+            return predicate != null ? _departments.Where(predicate) : _departments;
         }
 
         public void Update(Department item)

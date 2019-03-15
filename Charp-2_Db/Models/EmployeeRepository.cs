@@ -25,7 +25,19 @@ namespace Charp_2_Db.Models
             }
             else
             {
-                _employees = new List<Employee>();
+                _employees = new List<Employee>
+                {
+                    new Employee
+                    {
+                        Id = 1,
+                        FirstName = "Тест",
+                        LastName = "Тестов",
+                        MiddleName = "Тестович",
+                        Age = 2,
+                        Experience = 2,
+                        Position = "Ученик"
+                    }
+                };
             }
         }
 
@@ -47,7 +59,7 @@ namespace Charp_2_Db.Models
         public void Update(Employee item)
         {
             var emp = _employees.Find(q => q.Id == item.Id);
-            emp.Department = item.Department;
+            emp.DepartmentId = item.DepartmentId;
             emp.LastName = item.LastName;
             emp.FirstName = item.FirstName;
             emp.MiddleName = item.MiddleName;
