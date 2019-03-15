@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -12,26 +13,35 @@ namespace Charp_2_Db
     public partial class MainWindow
     {
         private readonly DbContext _db = new DbContext();
-        private ListCollectionView _data;
+
+        private ObservableCollection<Employee> _employees;
+        private ObservableCollection<Department> _departments;
         
         public MainWindow()
         {
             InitializeComponent();
+
+            _employees = new ObservableCollection<Employee>(_db.EmployeeRepository.RetrieveMultiple());
+            _departments = new ObservableCollection<Department>(_db.DepartmentRepository.RetrieveMultiple());
             
-            _data = new ListCollectionView(_db.EmployeeRepository.RetrieveMultiple().ToList());
-            
-            DataGrid.ItemsSource = _data;
+            DataGridEmployees.ItemsSource = _employees;
+            DgDepartment.ItemsSource = _departments;
+
+            DataGridDepartments.ItemsSource = _departments;
         }
 
         private void miSave_OnClick(object sender, RoutedEventArgs e)
         {
-            _db.EmployeeRepository.Save((IEnumerable<Employee>)_data.SourceCollection);
-            _data = new ListCollectionView(_db.EmployeeRepository.RetrieveMultiple().ToList());
+            _db.EmployeeRepository.Save(_employees);
+            _db.DepartmentRepository.Save(_departments);
+            _employees = new ObservableCollection<Employee>(_db.EmployeeRepository.RetrieveMultiple());
+            _departments = new ObservableCollection<Department>(_db.DepartmentRepository.RetrieveMultiple());
         }
 
         private void miRefresh_OnClick(object sender, RoutedEventArgs e)
         {
-            _data = new ListCollectionView(_db.EmployeeRepository.RetrieveMultiple().ToList());
+            _employees = new ObservableCollection<Employee>(_db.EmployeeRepository.RetrieveMultiple());
+            _departments = new ObservableCollection<Department>(_db.DepartmentRepository.RetrieveMultiple());
         }
     }
 }

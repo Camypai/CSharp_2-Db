@@ -4,17 +4,40 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Charp_2_Db"
+        xmlns:models="clr-namespace:Charp_2_Db.Models"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" MinWidth="600">
-    <Grid>
+        Title="MainWindow" Height="350" MinWidth="500">
+    <Grid d:DataContext="{d:DesignData Type=Employees}">
         <StackPanel>
             <Menu Height="25" VerticalAlignment="Top">
                 <MenuItem Header="Файл">
                     <MenuItem Header="Сохранить" Click="miSave_OnClick" />
-                    <MenuItem Header="Обновить" Click="miRefresh_OnClick"></MenuItem>
+                    <MenuItem Header="Обновить" Click="miRefresh_OnClick"/>
                 </MenuItem>
             </Menu>
-            <DataGrid x:Name="DataGrid" AutoGenerateColumns="True" />
+            <DataGrid x:Name="DataGridEmployees" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Path = Id}" Header="Id"/>
+                    <DataGridTextColumn Binding="{Binding Path = FirstName}" Header="Имя"/>
+                    <DataGridTextColumn Binding="{Binding Path = LastName}" Header="Фамилия"/>
+                    <DataGridTextColumn Binding="{Binding Path = MiddleName}" Header="Отчество"/>
+                    <DataGridTextColumn Binding="{Binding Path = FullName}" Header="ФИО"/>
+                    <DataGridTextColumn Binding="{Binding Path = Position}" Header="Должность"/>
+                    <DataGridTextColumn Binding="{Binding Path = Age}" Header="Возраст"/>
+                    <DataGridTextColumn Binding="{Binding Path = Experience}" Header="Опыт"/>
+                    <DataGridComboBoxColumn x:Name="DgDepartment" 
+                                            SelectedValuePath="Id"
+                                            SelectedValueBinding="{Binding Path=(models:Employee.DepartmentId)}" 
+                                            DisplayMemberPath="Name"
+                                            Header="Департамент"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid x:Name="DataGridDepartments" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Path = Id}" Header="Id"/>
+                    <DataGridTextColumn Binding="{Binding Path = Name}" Header="Название"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </StackPanel>
     </Grid>
 </Window>
