@@ -37,5 +37,6 @@ namespace Charp_2_Db.Models
         /// Департамент
         /// </summary>
         public int? DepartmentId { get; set; }
+        public Department Department { get; set; }
     }
 }

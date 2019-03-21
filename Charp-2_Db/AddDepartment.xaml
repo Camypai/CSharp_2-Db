@@ -1,0 +1,23 @@
+<Window x:Class="Charp_2_Db.AddDepartment"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Charp_2_Db"
+        mc:Ignorable="d"
+        Title="Добавить департамент" Height="90" Width="200">
+    <Grid>
+        <StackPanel Grid.Column="0" Grid.Row="0">
+            <TextBox Name="Name">Название</TextBox>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Name="OkButton" IsDefault="True" Grid.Column="0" Click="OkButton_OnClick">Ok</Button>
+                <Button Name="CancelButton" IsCancel="True" Grid.Column="1" Click="CancelButton_OnClick">Cancel</Button>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

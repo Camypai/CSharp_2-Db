@@ -40,10 +40,5 @@ namespace Charp_2_Db.Models
         /// Сохранить данные в хранилище
         /// </summary>
         void Save();
-        /// <summary>
-        /// Сохранить данные в хранилище
-        /// </summary>
-        /// <param name="items">Данные для сохранения</param>
-        void Save(IEnumerable<T> items);
     }
 }

@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Charp_2_Db"
-        xmlns:helpers="clr-namespace:Charp_2_Db.Helpers"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" MinWidth="500">
     
@@ -21,28 +20,25 @@
                     <MenuItem Header="Сохранить" Command="{Binding SaveCommand}" />
                     <MenuItem Header="Обновить" Command="{Binding RefreshCommand}"/>
                 </MenuItem>
+                <MenuItem Header="Создать сотрудника" Command="{Binding AddEmployee}"></MenuItem>
+                <MenuItem Header="Создать департамент" Command="{Binding AddDepartment}"></MenuItem>
             </Menu>
-            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Employees}">
+            <ComboBox ItemsSource="{Binding Source={StaticResource cbDepartments}}" SelectedValuePath="Id" DisplayMemberPath="Name" SelectedValue="{Binding SelectedItem}"></ComboBox>
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Employees, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Path = Id}" Header="Id"/>
-                    <DataGridTextColumn Binding="{Binding Path = FirstName}" Header="Имя"/>
-                    <DataGridTextColumn Binding="{Binding Path = LastName}" Header="Фамилия"/>
-                    <DataGridTextColumn Binding="{Binding Path = MiddleName}" Header="Отчество"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path = FullName}" Header="ФИО"/>
-                    <DataGridTextColumn Binding="{Binding Path = Position}" Header="Должность"/>
-                    <DataGridTextColumn Binding="{Binding Path = Age}" Header="Возраст"/>
-                    <DataGridTextColumn Binding="{Binding Path = Experience}" Header="Опыт"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Id}" Header="Id"/>
+                    <DataGridTextColumn Binding="{Binding FirstName}" Header="Имя"/>
+                    <DataGridTextColumn Binding="{Binding LastName}" Header="Фамилия"/>
+                    <DataGridTextColumn Binding="{Binding MiddleName}" Header="Отчество"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding FullName}" Header="ФИО"/>
+                    <DataGridTextColumn Binding="{Binding Position}" Header="Должность"/>
+                    <DataGridTextColumn Binding="{Binding Age}" Header="Возраст"/>
+                    <DataGridTextColumn Binding="{Binding Experience}" Header="Опыт"/>
                     <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource cbDepartments}}"
                                             SelectedValuePath="Id"
-                                            SelectedValueBinding="{Binding Path=DepartmentId}"
+                                            SelectedValueBinding="{Binding DepartmentId}"
                                             DisplayMemberPath="Name"
                                             Header="Департамент"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Departments}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Path = Id}" Header="Id"/>
-                    <DataGridTextColumn Binding="{Binding Path = Name}" Header="Название"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
