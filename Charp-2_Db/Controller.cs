@@ -40,7 +40,8 @@ namespace Charp_2_Db
             get => _selectedItem;
             set
             {
-                Employees = new ObservableCollection<Employee>(_db.EmployeeRepository.RetrieveMultiple(item => item.DepartmentId == value));
+                Employees = new ObservableCollection<Employee>(
+                    _db.EmployeeRepository.RetrieveMultiple($"DepartmentId eq {value}"));
                 CollectionViewSource.GetDefaultView(Employees).Refresh();
 
                 _selectedItem = value;
@@ -49,12 +50,12 @@ namespace Charp_2_Db
 
         private ObservableCollection<Employee> _employee;
         private int _selectedItem;
-        
+
         /// <summary>
         /// Форма добавления сотрудника
         /// </summary>
         private AddEmployee _addEmployee;
-        
+
         /// <summary>
         /// Форма добавления департамента
         /// </summary>
@@ -88,12 +89,12 @@ namespace Charp_2_Db
 
         public Command SaveCommand => _saveCommand ?? (_saveCommand = new Command(q =>
         {
-            _db.Save();
+            _db.Save(Employees);
             Departments = new ObservableCollection<Department>(_db.DepartmentRepository.RetrieveMultiple());
-            
+
 
             Employees = new ObservableCollection<Employee>(
-                _db.EmployeeRepository.RetrieveMultiple());
+                _db.EmployeeRepository.RetrieveMultiple($"DepartmentId eq {SelectedItem}"));
         }));
 
         public Command RefreshCommand => _refreshCommand ?? (_refreshCommand = new Command(q =>
@@ -109,8 +110,12 @@ namespace Charp_2_Db
 
             if (dialogResult.Value)
             {
-                Employees.Add(_db.EmployeeRepository.Retrieve(_addEmployee.Id.Value));
+                var e = _db.EmployeeRepository.Retrieve(_addEmployee.Id.Value);
+                if (e.DepartmentId == SelectedItem)
+                    Employees.Add(e);
             }
+
+            _addEmployee = new AddEmployee(_db);
         }));
 
         public Command AddDepartment => _addDepartmentCommand ?? (_addDepartmentCommand = new Command(q =>
@@ -121,15 +126,17 @@ namespace Charp_2_Db
             {
                 Departments.Add(_db.DepartmentRepository.Retrieve(_addDepartment.Id.Value));
             }
+
+            _addDepartment = new AddDepartment(_db);
         }));
 
         public Controller()
         {
             _db = new JobDbContext();
-            
+
             Departments =
                 new ObservableCollection<Department>(_db.DepartmentRepository.RetrieveMultiple());
-            
+
             SelectedItem = Departments.FirstOrDefault().Id;
 
             _addEmployee = new AddEmployee(_db);

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Charp_2_Db.Models
+namespace Web_db.Models
 {
     /// <summary>
     /// Интерфейс для работы с хранилищем данных
@@ -13,7 +13,7 @@ namespace Charp_2_Db.Models
         /// Создать запись в хранилище
         /// </summary>
         /// <param name="item">Запись для создания</param>
-        int Create(T item);
+        void Create(T item);
         /// <summary>
         /// Получить запись из хранилища по id
         /// </summary>
@@ -23,9 +23,9 @@ namespace Charp_2_Db.Models
         /// <summary>
         /// Получить все записи из хранилища, удовлетворяющие условию
         /// </summary>
-        /// <param name="filter">Условие выборки</param>
+        /// <param name="predicate">Условие выборки</param>
         /// <returns></returns>
-        IEnumerable<T> RetrieveMultiple(string filter);
+        IEnumerable<T> RetrieveMultiple(Func<T,bool> predicate);
         /// <summary>
         /// Обновить запись в хранилище
         /// </summary>
@@ -39,6 +39,6 @@ namespace Charp_2_Db.Models
         /// <summary>
         /// Сохранить данные в хранилище
         /// </summary>
-        void Save(IEnumerable<T> items);
+        void Save();
     }
 }

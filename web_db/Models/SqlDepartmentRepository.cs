@@ -2,30 +2,43 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net.Http;
-using Charp_2_Db.Helpers;
-using static Charp_2_Db.Helpers.WebDbController;
 
-namespace Charp_2_Db.Models
+namespace Web_db.Models
 {
-    /// <inheritdoc />
     /// <summary>
     /// Реализация интерфейса для работы с БД
     /// </summary>
     public class SqlDepartmentRepository : IRepository<Department>
     {
-        /// <inheritdoc />
+        /// <summary>
+        /// Контекст БД
+        /// </summary>
+        private readonly JobContext _db;
+
+        public SqlDepartmentRepository()
+        {
+            _db = new JobContext();
+            
+            if (!_db.Departments.Any())
+            {
+                _db.Departments.Add(new Department
+                {
+                    Name = "Школа"
+                });
+                
+                Save();
+            }
+        }
+
         /// <summary>
         /// Создание нового департамента
         /// </summary>
         /// <param name="item"></param>
-        public int Create(Department item)
+        public void Create(Department item)
         {
-            var result = PostAsync(item);
-            return result.Id;
+            _db.Departments.Add(item);
         }
 
-        /// <inheritdoc />
         /// <summary>
         /// Выборка департамента по id
         /// </summary>
@@ -33,48 +46,46 @@ namespace Charp_2_Db.Models
         /// <returns>Department</returns>
         public Department Retrieve(int id)
         {
-            return GetAsync<Department>($"Departments?key={id}");
+            return _db.Departments.Find(id);
         }
 
         /// <summary>
         /// Выборка департаментов по условию
         /// </summary>
-        /// <param name="filter">Условие выборки</param>
+        /// <param name="predicate">Условие выборки</param>
         /// <returns>IEnumerable</returns>
-        public IEnumerable<Department> RetrieveMultiple(string filter = null)
+        public IEnumerable<Department> RetrieveMultiple(Func<Department, bool> predicate = null)
         {
-            return filter != null
-                ? GetAsync<IEnumerable<Department>>($"{nameof(Department)}s", filter)
-                : GetAsync<IEnumerable<Department>>($"{nameof(Department)}s");
+            return predicate != null ? _db.Departments.Where(predicate) : _db.Departments;
         }
 
-        /// <inheritdoc />
         /// <summary>
         /// Обновление данных департамента
         /// </summary>
         /// <param name="item">Департамент для обновления</param>
         public void Update(Department item)
         {
-            PatchAsync($"{nameof(Department)}s?key={item.Id}", item);
+            var dep = _db.Departments.Find(item.Id);
+            dep.Name = item.Name;
+
+            _db.Entry(dep).State = EntityState.Modified;
         }
 
-        /// <inheritdoc />
         /// <summary>
         /// Удаление департамента
         /// </summary>
         /// <param name="item">Департамент для удаления</param>
         public void Delete(Department item)
         {
-            DeleteAsync($"{nameof(Department)}s?key={item.Id}");
+            _db.Departments.Remove(item);
         }
 
-        /// <inheritdoc />
         /// <summary>
         /// Сохранение данных в БД
         /// </summary>
-        public void Save(IEnumerable<Department> items)
+        public void Save()
         {
-            PatchAsync(items);
+            _db.SaveChanges();
         }
     }
 }

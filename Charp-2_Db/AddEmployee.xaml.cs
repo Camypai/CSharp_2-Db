@@ -44,10 +44,7 @@ namespace Charp_2_Db
                 Position = Position.Text
             };
             
-            _db.EmployeeRepository.Create(emp);
-            _db.EmployeeRepository.Save();
-
-            Id = emp.Id;
+            Id = _db.EmployeeRepository.Create(emp);
 
             DialogResult = true;
         }

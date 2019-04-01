@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace Charp_2_Db.Models
+namespace Web_db.Models
 {
     public class JobDbContext
     {
@@ -22,9 +20,9 @@ namespace Charp_2_Db.Models
         /// <summary>
         /// Сохранение данных в БД
         /// </summary>
-        public void Save(IEnumerable<Employee> items)
+        public void Save()
         {
-            EmployeeRepository.Save(items);
+            EmployeeRepository.Save();
         }
     }
 }

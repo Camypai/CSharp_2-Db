@@ -33,10 +33,7 @@ namespace Charp_2_Db
                 Name = Name.Text
             };
             
-            _db.DepartmentRepository.Create(dep);
-            _db.DepartmentRepository.Save();
-
-            Id = dep.Id;
+            Id = _db.DepartmentRepository.Create(dep);
 
             DialogResult = true;
         }

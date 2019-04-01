@@ -50,6 +50,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\..\..\..\..\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Net.Http\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Net.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -81,6 +84,7 @@
     </Compile>
     <Compile Include="Controller.cs" />
     <Compile Include="Helpers\Command.cs" />
+    <Compile Include="Helpers\WebDbController.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -88,13 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BaseModel.cs" />
-    <Compile Include="Models\DbContext.cs" />
     <Compile Include="Models\Department.cs" />
-    <Compile Include="Models\DepartmentRepository.cs" />
     <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\EmployeeRepository.cs" />
     <Compile Include="Models\IRepository.cs" />
-    <Compile Include="Models\JobContext.cs" />
     <Compile Include="Models\JobDbContext.cs" />
     <Compile Include="Models\SqlDepartmentRepository.cs" />
     <Compile Include="Models\SqlEmployeeRepository.cs" />
